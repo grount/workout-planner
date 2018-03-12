@@ -1,31 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addNavigationHelpers, StackNavigator, TabNavigator } from 'react-navigation';
-
+import { addNavigationHelpers, StackNavigator } from 'react-navigation';
 import MainScreen from '../components/MainScreen';
 import { addListener } from '../utils/redux';
+import tabWithNavigator from './TabNavigator.js';
+import AddProgramScreen from '../components/AddProgramScreen.js';
 
-export const AppNavigator = TabNavigator({
-	Main: { screen: MainScreen },
-	Test: { screen: MainScreen,
-		navigationOptions: { title: 'Log'}}, // TODO Remove after test screen not needed.
-	Test2: { screen: MainScreen,
-		navigationOptions: { title: 'Personal'}}, 
-	},{
-	tabBarPosition: 'bottom',
-	lazy: true,
-	tabBarOptions: {
-		style: {
-			backgroundColor: '#05668D',
-		},
-		indicatorStyle: {
-			backgroundColor: '#02C39A'
-		},
-		tabStyle: {
-			height: 40,
+
+export const AppNavigator = StackNavigator({
+	HomeStackScreen: {
+		screen: tabWithNavigator,
+		navigationOptions: {
+			title: 'Home',
+			/*header: null*/
 		}
-	}
+	},
+	addProgramScreen: { 
+		screen: AddProgramScreen,
+		navigationOptions: {
+			title: 'Add Program'
+		}	
+	},
 });
 
 class AppWithNavigationState extends React.Component {
@@ -49,7 +45,7 @@ class AppWithNavigationState extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	nav: state.nav,
+	nav: state.stackNav
 });
 
 export default connect(mapStateToProps)(AppWithNavigationState);

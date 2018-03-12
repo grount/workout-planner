@@ -7,9 +7,9 @@ import style from '../style/MainScreen.js';
 class MainScreen extends React.Component {
 	constructor(props) {
 		super(props);
-
-			this.noProgramFound = this.props.mainScreen.program === null;
+		this.noProgramFound = this.props.mainScreen.program === null;
 	}
+
 	static navigationOptions = {
 		title: 'Home Screen',
 		headerStyle: {
@@ -18,15 +18,11 @@ class MainScreen extends React.Component {
 		headerTintColor: '#fff'
 	};
 
-	addProgramPage() {
-	
-	}
-
 	render() {
 		return (
 			<View style={style.container}>
 				<View style={style.mainContent}>
-					{this.noProgramFound ? <NoProgramScreen/> : null}
+					{this.noProgramFound ? <NoProgramScreen navigation={this.props.navigation}/> : null}
 				</View>
 			</View>
 		);
