@@ -18,10 +18,22 @@ export const AppNavigator = StackNavigator({
 	addProgramScreen: { 
 		screen: addProgramTabNav,
 		navigationOptions: {
-			title: 'Add Program'
+			title: 'Add Program',
+			headerTintColor: 'white',
+			headerStyle: {
+				backgroundColor: '#05668D',
+				shadowOpacity: 0,
+				shadowOffset: {
+					height: 0
+				},
+				shadowRadius: 0,
+				elevation: 0,
+				height: 45
+			}
 		}	
 	},
 });
+
 
 class AppWithNavigationState extends React.Component {
 	static propTypes = {

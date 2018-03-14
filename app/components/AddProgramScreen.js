@@ -79,4 +79,24 @@ export default class AddProgramScreen extends React.Component {
 export const addProgramTabNav = TabNavigator({
 	addProg: { screen: AddProgramScreen },
 	customize: { screen: AddProgramScreen },
+}, {
+	lazy: true,
+	tabBarOptions: {
+		style: {
+			backgroundColor: '#05668D',
+		},
+		indicatorStyle: {
+			backgroundColor: '#02C39A'
+		},
+		tabStyle: {
+			height: 40,
+		}
+	}
+
 })
+
+
+
+
+
+
