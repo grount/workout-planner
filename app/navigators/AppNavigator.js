@@ -1,23 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addNavigationHelpers, StackNavigator } from 'react-navigation';
+import { addNavigationHelpers, StackNavigator, TabNavigator } from 'react-navigation';
 import MainScreen from '../components/MainScreen';
 import { addListener } from '../utils/redux';
 import tabWithNavigator from './TabNavigator.js';
-import AddProgramScreen from '../components/AddProgramScreen.js';
-
+import AddProgramScreen, { addProgramTabNav } from '../components/AddProgramScreen.js';
 
 export const AppNavigator = StackNavigator({
 	HomeStackScreen: {
 		screen: tabWithNavigator,
 		navigationOptions: {
 			title: 'Home',
-			/*header: null*/
+			header: null
 		}
 	},
 	addProgramScreen: { 
-		screen: AddProgramScreen,
+		screen: addProgramTabNav,
 		navigationOptions: {
 			title: 'Add Program'
 		}	

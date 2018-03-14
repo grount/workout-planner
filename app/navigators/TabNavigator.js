@@ -28,14 +28,13 @@ export const TabNav = TabNavigator({
 
 class tabWithNavigator extends React.Component {
 	render() {
-		const { dispatch, nav, navigate } = this.props;
+		const { dispatch, nav } = this.props;
 		return (
 			<TabNav
 				navigation={addNavigationHelpers({
 					dispatch,
 					state: nav,
 					addListener,
-					navigate
 				})}
 			/>
 		);
