@@ -1,8 +1,8 @@
 import React from 'react'; 
-import { View, Text, FlatList, ActivityIndicator } from 'react-native';
-import { List, ListItem, SearchBar } from 'react-native-elements';
+import { View, FlatList, ActivityIndicator } from 'react-native';
+import { SearchBar } from 'react-native-elements';
 import { TabNavigator } from 'react-navigation';
-
+import { Content, Container, Text, List, ListItem, Separator } from 'native-base';
 
 export default class AddProgramScreen extends React.Component {
 	constructor(props) {
@@ -10,26 +10,27 @@ export default class AddProgramScreen extends React.Component {
 
 		this.state = {
 			loading: false,
+			
 			data: [
-				{key: 'Bench Press'},
-				{key: 'Bench Press1'},
-				{key: 'Bench Press2'},
-				{key: 'Bench Press3'},
-				{key: 'Bench Press4'},
-				{key: 'Bench Press5'},
-				{key: 'Bench Press6'},
-				{key: 'Bench Press7'},
-				{key: 'Bench Press8'},
-				{key: 'Bench Press9'},
-				{key: 'Bench Press10'},
-				{key: 'Bench Press11'},
-				{key: 'Bench Press12'},
-				{key: 'Bench Press13'},
-				{key: 'Bench Press14'},
-				{key: 'Bench Press15'},
-				{key: 'Bench Press16'},
-				{key: 'Bench Press17'},
+				{key: 'Bench Press', header: true},
+				{key: 'Bench Press1', header: false},
+				{key: 'Bench Press2', header: false},
+				{key: 'Bench Press3', header: false},
+				{key: 'Bench Press4', header: false},
+				{key: 'Bench Press5', header: false},
+				{key: 'Bench Press6', header: false},
+				{key: 'Bench Press7', header: false},
+				{key: 'Bench Press8', header: false},
+				{key: 'Bench Press9', header: false},
+				{key: 'Shoulders', header: true},
+				{key: 'Shoulders1', header: false},
+				{key: 'Shoulders2', header: false},
+				{key: 'Shoulders3', header: false},
+				{key: 'Shoulders4', header: false},
+				{key: 'Shoulders5', header: false},
+				{key: 'Shoulders6', header: false},
 			],
+			//			data: ['Test','Test','Test','Test','Test','Test','Test','Test','Test','Test','Test','Test','Test','Test','Test','Test','Test'],
 			page: 1,
 			seed: 1,
 			error: null,
@@ -56,25 +57,39 @@ export default class AddProgramScreen extends React.Component {
 	};
 
 	/*ListFooterComponent={this.renderFooter} Future loading partial list from server and loading the rest of the list*/
+
+	renderItemHeader(text, isHeader){
+		if (isHeader) {
+			return (
+				<Separator bordered>
+					<Text>{text}</Text>
+				</Separator>
+			)
+		}
+		return null;
+	}
+
 	render() {
-		return(
-			<List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0, marginTop: 0 }}>
-				<FlatList
-					data={this.state.data}
-					renderItem={({item})=> (
-						<ListItem
-							roundAvatar
-							title= {item.key}
-							key={item.key}
-						/>
-					)}
-					ListHeaderComponent={this.renderHeader}
-				>
-				</FlatList>
-			</List>
-		)
+		return (
+			<Container>
+				<Content>
+					{this.renderHeader()}
+					<List dataArray={this.state.data}
+						renderRow={(item) =>
+								<View>
+									{this.renderItemHeader(item.key, item.header)}
+									<ListItem>
+										<Text>{item.key}</Text>
+									</ListItem>
+								</View>
+						}>
+					</List>
+				</Content>
+			</Container>
+		)	
 	}
 }
+
 
 export const addProgramTabNav = TabNavigator({
 	addProg: { screen: AddProgramScreen },
@@ -92,11 +107,4 @@ export const addProgramTabNav = TabNavigator({
 			height: 40,
 		}
 	}
-
 })
-
-
-
-
-
-
