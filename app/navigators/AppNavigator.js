@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Platform, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import { addNavigationHelpers, StackNavigator, TabNavigator } from 'react-navigation';
 import MainScreen from '../components/MainScreen';
@@ -32,7 +33,12 @@ export const AppNavigator = StackNavigator({
 			}
 		}	
 	},
-});
+},
+	{
+		cardStyle: {
+			paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
+		}
+	});
 
 
 class AppWithNavigationState extends React.Component {
