@@ -1,13 +1,13 @@
 import React from 'react'; 
 import { View, FlatList, ActivityIndicator } from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import { TabNavigator } from 'react-navigation';
+import { TabNavigator, NavigationActions } from 'react-navigation';
 import { Content, Container, Text, List, ListItem, Separator } from 'native-base';
+import { Toolbar, ThemeProvider } from 'react-native-material-ui';
 
 export default class AddProgramScreen extends React.Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			loading: false,
 			
@@ -72,8 +72,7 @@ export default class AddProgramScreen extends React.Component {
 	render() {
 		return (
 			<Container>
-				<Content>
-					{this.renderHeader()}
+   				<Content>
 					<List dataArray={this.state.data}
 						renderRow={(item) =>
 								<View>
@@ -90,7 +89,6 @@ export default class AddProgramScreen extends React.Component {
 	}
 }
 
-
 export const addProgramTabNav = TabNavigator({
 	addProg: { screen: AddProgramScreen },
 	customize: { screen: AddProgramScreen },
@@ -106,5 +104,20 @@ export const addProgramTabNav = TabNavigator({
 		tabStyle: {
 			height: 40,
 		}
-	}
+	},
 })
+
+AddProgramScreen.navigationOptions = ({navigation}) => ({
+	header: <ThemeProvider>
+		<Toolbar
+			leftElement="arrow-back"
+			onLeftElementPress={() => navigation.goBack(null)}
+			centerElement="Searchable"
+			searchable={{
+				autoFocus: true,
+				placeholder: 'Search',
+			}}
+		/>
+	</ThemeProvider>
+
+});
