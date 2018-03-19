@@ -1,6 +1,5 @@
 import React from 'react'; 
 import { View, FlatList, ActivityIndicator } from 'react-native';
-import { SearchBar } from 'react-native-elements';
 import { TabNavigator, NavigationActions } from 'react-navigation';
 import { Content, Container, Text, List, ListItem, Separator } from 'native-base';
 import { Toolbar, ThemeProvider } from 'react-native-material-ui';
@@ -37,15 +36,6 @@ export default class AddProgramScreen extends React.Component {
 			refreshing: false
 		};
 	}
-
-	renderHeader = () => {
-		return <SearchBar 
-			placeholder="Search"
-			lightTheme
-			round
-			icon={{ type: 'font-awesome', name: 'search'}}
-		/>
-	};
 
 	renderFooter = () => {
 		if (!this.state.loading) return null;
@@ -107,17 +97,30 @@ export const addProgramTabNav = TabNavigator({
 	},
 })
 
+const uiTheme = {
+	toolbar: {
+		container: {
+			backgroundColor: '#05668D',
+				shadowOpacity: 0,
+				shadowOffset: {
+					height: 0
+				},
+				shadowRadius: 0,
+				elevation: 0,
+		}	
+	}
+}
+
 AddProgramScreen.navigationOptions = ({navigation}) => ({
-	header: <ThemeProvider>
+	header: <ThemeProvider uiTheme={uiTheme}>
 		<Toolbar
 			leftElement="arrow-back"
 			onLeftElementPress={() => navigation.goBack(null)}
-			centerElement="Searchable"
+			centerElement="Add Program"
 			searchable={{
 				autoFocus: true,
 				placeholder: 'Search',
 			}}
 		/>
 	</ThemeProvider>
-
 });
