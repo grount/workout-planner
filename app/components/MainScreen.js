@@ -7,7 +7,6 @@ import style from '../style/MainScreen.js';
 class MainScreen extends React.Component {
 	constructor(props) {
 		super(props);
-		this.noProgramFound = this.props.mainScreen.program === null;
 	}
 
 	static navigationOptions = {
@@ -19,10 +18,11 @@ class MainScreen extends React.Component {
 	};
 
 	render() {
+		const isProgramExists = this.props.mainScreen.get('isProgramExists');
 		return (
 			<View style={style.container}>
 				<View style={style.mainContent}>
-					{this.noProgramFound ? <NoProgramScreen navigation={this.props.navigation}/> : null}
+					{ isProgramExists ? null : <NoProgramScreen navigation={this.props.navigation}/>}
 				</View>
 			</View>
 		);

@@ -5,6 +5,7 @@ import { Icon, Label, Item, Input, Left, Right, Content, Container, Text, List, 
 import { Toolbar, ThemeProvider } from 'react-native-material-ui';
 import { CheckBox } from 'react-native-elements';
 import { uiTheme, styles} from '../style/AddProgramScreen.js';
+import * as actions from '../actions/MainPageActions';
 
 export default class AddProgramScreen extends React.Component {
 	constructor(props) {
@@ -39,25 +40,32 @@ export default class AddProgramScreen extends React.Component {
 		};
 	}
 
-	 static navigationOptions = ({navigation}) => ({
+	static navigationOptions = ({navigation}) => ({
 		header: <ThemeProvider uiTheme={uiTheme}>
-		<Toolbar
-		leftElement="arrow-back"
-		onLeftElementPress={() => navigation.goBack(null)}
-		centerElement="Add Program"
-		searchable={{
-			autoFocus: true,
-			placeholder: 'Search',
-			onChangeText: (text) => navigation.state.params.onToolbarChangeText(text)
-		}}
-		/>
+			<Toolbar
+				leftElement="arrow-back"
+				onLeftElementPress={() => navigation.goBack(null)}
+				centerElement="Add Program"
+				rightElement="check"
+				onRightElementPress={() => navigation.state.params.onToolbarRightElementPress()}
+				searchable={{
+					autoFocus: true,
+					placeholder: 'Search',
+					onChangeText: (text) => navigation.state.params.onToolbarChangeText(text)
+				}}
+			/>
 		</ThemeProvider>
 	});
 
 	componentDidMount() {
 		this.props.navigation.setParams({
-			onToolbarChangeText: this.onToolbarChangeText.bind(this)
+			onToolbarChangeText: this.onToolbarChangeText.bind(this),
+			onToolbarRightElementPress: this.onToolbarRightElementPress.bind(this),
 		})
+	}
+
+	onToolbarRightElementPress = () => {
+			this.props.navigation.dispatch(actions.setProgramExists(true));
 	}
 
 	renderFooter = () => {

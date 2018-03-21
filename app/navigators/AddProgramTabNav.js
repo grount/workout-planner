@@ -2,10 +2,16 @@ import AddProgramScreen from '../components/AddProgramScreen.js';
 import { TabNavigator } from 'react-navigation';
 
 const addProgramTabNav = TabNavigator({
-	addProg: { screen: AddProgramScreen },
+	addProg: { 
+		screen: AddProgramScreen,
+		navigationOptions: {
+			title: 'Add Program',
+		},
+	},
 	customize: { screen: AddProgramScreen },
 }, {
 	lazy: true,
+	swipeEnabled: false,
 	tabBarOptions: {
 		style: {
 			backgroundColor: '#05668D',
