@@ -4,6 +4,7 @@ import { TabNavigator, NavigationActions } from 'react-navigation';
 import { Left, Right, Content, Container, Text, List, ListItem, Separator } from 'native-base';
 import { Toolbar, ThemeProvider } from 'react-native-material-ui';
 import { CheckBox } from 'react-native-elements';
+import { uiTheme, styles} from '../style/AddProgramScreen.js';
 
 export default class AddProgramScreen extends React.Component {
 	constructor(props) {
@@ -131,43 +132,5 @@ export default class AddProgramScreen extends React.Component {
 				</Content>
 			</Container>
 		)	
-	}
-}
-
-const styles = {
-	container: {
-		backgroundColor: '#FFF'
-	}
-}
-
-export const addProgramTabNav = TabNavigator({
-	addProg: { screen: AddProgramScreen },
-	customize: { screen: AddProgramScreen },
-}, {
-	lazy: true,
-	tabBarOptions: {
-		style: {
-			backgroundColor: '#05668D',
-		},
-		indicatorStyle: {
-			backgroundColor: '#02C39A'
-		},
-		tabStyle: {
-			height: 40,
-		}
-	},
-})
-
-const uiTheme = {
-	toolbar: {
-		container: {
-			backgroundColor: '#05668D',
-			shadowOpacity: 0,
-			shadowOffset: {
-				height: 0
-			},
-			shadowRadius: 0,
-			elevation: 0,
-		}	
 	}
 }

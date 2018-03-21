@@ -6,7 +6,8 @@ import { addNavigationHelpers, StackNavigator, TabNavigator } from 'react-naviga
 import MainScreen from '../components/MainScreen';
 import { addListener } from '../utils/redux';
 import tabWithNavigator from './TabNavigator.js';
-import AddProgramScreen, { addProgramTabNav } from '../components/AddProgramScreen.js';
+import AddProgramScreen from '../components/AddProgramScreen.js';
+import addProgramTabNav from '../navigators/AddProgramTabNav.js';
 
 export const AppNavigator = StackNavigator({
 	HomeStackScreen: {
