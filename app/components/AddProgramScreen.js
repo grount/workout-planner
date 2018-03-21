@@ -1,7 +1,7 @@
 import React from 'react'; 
-import { View, FlatList, ActivityIndicator } from 'react-native';
+import { Keyboard, View, FlatList, ActivityIndicator } from 'react-native';
 import { TabNavigator, NavigationActions } from 'react-navigation';
-import { Left, Right, Content, Container, Text, List, ListItem, Separator } from 'native-base';
+import { Icon, Label, Item, Input, Left, Right, Content, Container, Text, List, ListItem, Separator } from 'native-base';
 import { Toolbar, ThemeProvider } from 'react-native-material-ui';
 import { CheckBox } from 'react-native-elements';
 import { uiTheme, styles} from '../style/AddProgramScreen.js';
@@ -11,6 +11,7 @@ export default class AddProgramScreen extends React.Component {
 		super(props);
 		this.state = {
 			search: '',
+			programName: '',
 			loading: false,
 			data: [
 				{ key: 'Bench Press', header: true, checked: true},
@@ -99,17 +100,24 @@ export default class AddProgramScreen extends React.Component {
 		this.setState({search: text})
 	}
 
+	onInputChangeText = (text) => {
+		this.setState({programName: text})
+	}
+
 	render() {
 		let filteredData = this.state.data.filter(
 			(data) => {
-				console.log(data);
-				console.log(this.state.search);
 				return data.key.indexOf(this.state.search) !== -1;
 			}	
 		);
 		return (
-			<Container style={styles.container}>
+			<Container ref='containerRef' style={styles.container}>
 				<Content>
+					<Item inlineLabel rounded style={{flex:1, flexGrow: 0, marginTop: 5, marginBottom: 5, flexShrink: 0,  alignSelf: 'center', width: '95%', height: 35, borderColor: '#00CCA0'}}>
+						<Label style={{color: '#067EAD', paddingLeft: 8}} >Program Name:</Label>
+						<Input style={{color: '#00CCA0'}} onChangeText={(text) => this.onInputChangeText(text) }/>
+						<Icon active name='arrow-down' style={{color:'#067EAD'}} onPress={Keyboard.dismiss}/>
+					</Item>
 					<List dataArray={filteredData}
 						renderRow={(item, sectionId, index) =>
 								<View>
