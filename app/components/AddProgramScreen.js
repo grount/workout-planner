@@ -1,7 +1,7 @@
 import React from 'react'; 
 import { Alert, Keyboard, View, FlatList, ActivityIndicator } from 'react-native';
 import { TabNavigator, NavigationActions } from 'react-navigation';
-import { Icon, Label, Item, Input, Left, Right, Content, Container, Text, List, ListItem, Separator } from 'native-base';
+import { Button, Body, Icon, Label, Item, Input, Left, Right, Content, Container, Text, List, ListItem, Separator } from 'native-base';
 import { Toolbar, ThemeProvider } from 'react-native-material-ui';
 import { CheckBox } from 'react-native-elements';
 import { uiTheme, styles} from '../style/AddProgramScreen.js';
@@ -135,10 +135,10 @@ export default class AddProgramScreen extends React.Component {
 			<Container ref='containerRef' style={styles.container}>
 				{this.state.showDialog ? this.showDialogAlert() : null}
 				<Content>
-					<Item inlineLabel rounded style={{flex:1, flexGrow: 0, marginTop: 5, marginBottom: 5, flexShrink: 0,  alignSelf: 'center', width: '95%', height: 35, borderColor: '#00CCA0'}}>
-						<Label style={{color: '#067EAD', paddingLeft: 8}} >Program Name:</Label>
-						<Input style={{color: '#00CCA0'}} onChangeText={(text) => this.onInputChangeText(text) }/>
-						<Icon active name='arrow-down' style={{color:'#067EAD'}} onPress={Keyboard.dismiss}/>
+					<Item inlineLabel rounded >
+						<Label style={styles.label} >Program Name:</Label>
+						<Input style={styles.lightGreen} onChangeText={(text) => this.onInputChangeText(text) }/>
+						<Icon active name='arrow-down' style={styles.lightBlue} onPress={Keyboard.dismiss}/>
 					</Item>
 					<List dataArray={filteredData}
 						renderRow={(item, sectionId, index) =>
@@ -150,13 +150,19 @@ export default class AddProgramScreen extends React.Component {
 											checkedIcon='check'
 											checkedColor='#05668D'
 											uncheckedColor='#02C39A'
-											containerStyle={{backgroundColor: '#FFF', borderColor: '#FFF', padding: 0, margin: 0}}
+											containerStyle={styles.checkBox}
 											onPress={() => this.onCheckBoxChange(index) }
 										/>
-
-									<Text>{item.key}</Text>
-								</ListItem>
-							</View>
+										<Body>	
+											<Text>{item.key}</Text>
+										</Body>
+										<Right>
+											<Button iconRight transparent style={styles.button}>
+												<Icon name="arrow-forward" style={styles.lightBlue}/>
+											</Button>
+										</Right>
+									</ListItem>
+								</View>
 						}>
 					</List>
 				</Content>
@@ -164,3 +170,4 @@ export default class AddProgramScreen extends React.Component {
 		)	
 	}
 }
+
