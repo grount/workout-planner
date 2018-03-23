@@ -1,5 +1,5 @@
 import React from 'react'; 
-import { Keyboard, View, FlatList, ActivityIndicator } from 'react-native';
+import { Alert, Keyboard, View, FlatList, ActivityIndicator } from 'react-native';
 import { TabNavigator, NavigationActions } from 'react-navigation';
 import { Icon, Label, Item, Input, Left, Right, Content, Container, Text, List, ListItem, Separator } from 'native-base';
 import { Toolbar, ThemeProvider } from 'react-native-material-ui';
@@ -13,7 +13,7 @@ export default class AddProgramScreen extends React.Component {
 		this.state = {
 			search: '',
 			programName: '',
-			loading: false,
+			showDialog: false,
 			data: [
 				{ key: 'Bench Press', header: true, checked: true},
 				{ key: 'Bench Press1', header: false, checked: false},
@@ -33,10 +33,6 @@ export default class AddProgramScreen extends React.Component {
 				{ key: 'Shoulders5', header: false, checked: false},
 				{ key: 'Shoulders6', header: false, checked: false},
 			],
-			page: 1,
-			seed: 1,
-			error: null,
-			refreshing: false
 		};
 	}
 
@@ -65,7 +61,13 @@ export default class AddProgramScreen extends React.Component {
 	}
 
 	onToolbarRightElementPress = () => {
+		if(this.state.programName !== '') {
 			this.props.navigation.dispatch(actions.setProgramExists(true));
+			this.props.navigation.goBack(null);
+		}
+		else {
+			this.setState({showDialog: true});
+		}
 	}
 
 	renderFooter = () => {
@@ -112,6 +114,17 @@ export default class AddProgramScreen extends React.Component {
 		this.setState({programName: text})
 	}
 
+	showDialogAlert(){
+		return (
+			Alert.alert(
+				'Warning',
+				'Please enter a program name before pressing the save button',
+				[{text: 'OK', onPress: () => this.setState({showDialog: false})},],
+				{ cancelable: false }
+			)
+		)
+	}
+
 	render() {
 		let filteredData = this.state.data.filter(
 			(data) => {
@@ -120,6 +133,7 @@ export default class AddProgramScreen extends React.Component {
 		);
 		return (
 			<Container ref='containerRef' style={styles.container}>
+				{this.state.showDialog ? this.showDialogAlert() : null}
 				<Content>
 					<Item inlineLabel rounded style={{flex:1, flexGrow: 0, marginTop: 5, marginBottom: 5, flexShrink: 0,  alignSelf: 'center', width: '95%', height: 35, borderColor: '#00CCA0'}}>
 						<Label style={{color: '#067EAD', paddingLeft: 8}} >Program Name:</Label>
