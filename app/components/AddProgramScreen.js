@@ -186,7 +186,9 @@ export default class AddProgramScreen extends React.Component {
 											iconRight
 											transparent
 											style={styles.button}
-											onPress={() => console.log('123')}>
+											onPress={() =>
+												this.props.navigation.navigate('AddProgramItemScreen')
+											}>
 											<Icon name="arrow-forward" style={styles.lightBlue} />
 										</Button>
 									</Right>
