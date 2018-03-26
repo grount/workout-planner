@@ -4,19 +4,34 @@ import {addNavigationHelpers, TabNavigator} from 'react-navigation';
 import {addListener} from '../utils/redux';
 import MainScreen from '../components/MainScreen.js';
 import AddProgram from '../components/AddProgramScreen.js';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export const TabNav = TabNavigator(
 	{
-		homeScreen: {screen: MainScreen},
+		homeScreen: {
+			screen: MainScreen,
+			navigationOptions: {
+				tabBarIcon: ({tintColor}) => (
+					<Icon name="home" size={25} color={tintColor} />
+				),
+			},
+		},
 		tempScreen: {
 			screen: AddProgram,
-			navigationOptions: {title: 'Log'},
+			navigationOptions: {
+				title: 'Log',
+				tabBarIcon: ({tintColor}) => (
+					<Icon name="ban" size={25} color="#FFF" color={tintColor} />
+				),
+			},
 		}, // TODO Remove after test screen not needed.
 	},
 	{
 		tabBarPosition: 'bottom',
 		lazy: true,
 		tabBarOptions: {
+			activeTintColor: '#FFF',
+			inactiveTintColor: 'rgba(255,255,255,0.25)',
 			style: {
 				backgroundColor: '#05668D',
 			},
@@ -26,6 +41,8 @@ export const TabNav = TabNavigator(
 			tabStyle: {
 				height: 40,
 			},
+			showIcon: true,
+			showLabel: false,
 		},
 	},
 );
