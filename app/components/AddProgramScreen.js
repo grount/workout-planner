@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, Keyboard, View, ActivityIndicator} from 'react-native';
+import {Alert, Keyboard, View} from 'react-native';
 import {
 	Button,
 	Body,
@@ -85,21 +85,19 @@ export default class AddProgramScreen extends React.Component {
 		}
 	};
 
-	renderFooter = () => {
-		if (!this.state.loading) return null;
-		return (
-			<View
-				style={{
-					paddingVertical: 20,
-					borderTopWidth: 1,
-					borderTopColor: '#CED0CE',
-				}}>
-				<ActivityIndicator animating size="large" />
-			</View>
-		);
-	};
+	setDataOptions(index, data) {
+		const arr = [...this.state.data];
+		const newItem = {
+			...arr[index],
+			options: data,
+		};
 
-	/*ListFooterComponent={this.renderFooter} Future loading partial list from server and loading the rest of the list*/
+		arr[index] = newItem;
+
+		this.setState({
+			data: arr,
+		});
+	}
 
 	renderItemHeader(text, isHeader) {
 		if (isHeader) {
@@ -182,15 +180,23 @@ export default class AddProgramScreen extends React.Component {
 										<Text>{item.key}</Text>
 									</Body>
 									<Right>
-										<Button
-											iconRight
-											transparent
-											style={styles.button}
-											onPress={() =>
-												this.props.navigation.navigate('AddProgramItemScreen')
-											}>
-											<Icon name="arrow-forward" style={styles.lightBlue} />
-										</Button>
+										{item.checked ? (
+											<Button
+												iconRight
+												transparent
+												style={styles.button}
+												onPress={() =>
+													this.props.navigation.navigate(
+														'AddProgramItemScreen',
+														{
+															text: item.key,
+															setDataOptions: () => this.setDataOptions,
+														},
+													)
+												}>
+												<Icon name="arrow-forward" style={styles.lightBlue} />
+											</Button>
+										) : null}
 									</Right>
 								</ListItem>
 							</View>
