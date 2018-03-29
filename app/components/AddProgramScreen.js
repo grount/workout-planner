@@ -153,13 +153,13 @@ export default class AddProgramScreen extends React.Component {
 					<Item inlineLabel rounded>
 						<Label style={styles.label}>Program Name:</Label>
 						<Input
-							style={MainStyles.green}
+							style={MainStyles.greenColor}
 							onChangeText={text => this.onInputChangeText(text)}
 						/>
 						<Icon
 							active
 							name="arrow-down"
-							style={MainStyles.blue}
+							style={MainStyles.blueColor}
 							onPress={Keyboard.dismiss}
 						/>
 					</Item>
