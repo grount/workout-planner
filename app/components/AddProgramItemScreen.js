@@ -2,14 +2,15 @@ import React from 'react';
 import {TextInput} from 'react-native';
 import {ThemeProvider, Toolbar} from 'react-native-material-ui';
 import {Text, Body, Card, CardItem, Content, Container} from 'native-base';
+import Styles from '../style/AddProgramItemScreen.js';
 
 export default class AddProgramItemScreen extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			repetitions: 1,
-			sets: 1,
+			repetitions: '1',
+			sets: '1',
 		};
 	}
 	static navigationOptions = ({navigation}) => ({
@@ -29,7 +30,6 @@ export default class AddProgramItemScreen extends React.Component {
 	onChangeSetInput(text) {
 		const newText = this.onChangeInput(text);
 		this.setState({sets: newText});
-		console.log(this.state);
 	}
 
 	onChangeRepetitionsInput(text) {
@@ -66,15 +66,7 @@ export default class AddProgramItemScreen extends React.Component {
 							<Body>
 								<Text> Sets: </Text>
 								<TextInput
-									style={{
-										padding: 2,
-										marginLeft: 5,
-										borderWidth: 0.5,
-										width: 30,
-										height: 30,
-										borderRadius: 4,
-										borderColor: '#05668D',
-									}}
+									style={Styles.textInput}
 									keyboardType="numeric"
 									value={this.state.sets}
 									maxLength={3}
