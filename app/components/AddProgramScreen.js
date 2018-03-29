@@ -18,6 +18,7 @@ import {Toolbar, ThemeProvider} from 'react-native-material-ui';
 import {CheckBox} from 'react-native-elements';
 import {uiTheme, styles} from '../style/AddProgramScreen.js';
 import * as actions from '../actions/MainPageActions';
+import MainStyles from '../style/MainStyles.js';
 
 export default class AddProgramScreen extends React.Component {
 	constructor(props) {
@@ -152,13 +153,13 @@ export default class AddProgramScreen extends React.Component {
 					<Item inlineLabel rounded>
 						<Label style={styles.label}>Program Name:</Label>
 						<Input
-							style={styles.lightGreen}
+							style={MainStyles.green}
 							onChangeText={text => this.onInputChangeText(text)}
 						/>
 						<Icon
 							active
 							name="arrow-down"
-							style={styles.lightBlue}
+							style={MainStyles.blue}
 							onPress={Keyboard.dismiss}
 						/>
 					</Item>
@@ -171,8 +172,8 @@ export default class AddProgramScreen extends React.Component {
 									<CheckBox
 										checked={item.checked}
 										checkedIcon="check"
-										checkedColor="#05668D"
-										uncheckedColor="#02C39A"
+										checkedColor={MainStyles.blue}
+										uncheckedColor={MainStyles.green}
 										containerStyle={styles.checkBox}
 										onPress={() => this.onCheckBoxChange(index)}
 									/>
