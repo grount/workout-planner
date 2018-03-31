@@ -13,6 +13,13 @@ export default class AddProgramItemScreen extends React.Component {
 			sets: '1',
 		};
 	}
+
+	componentDidMount() {
+		this.props.navigation.setParams({
+			setData: this.setData.bind(this),
+		});
+	}
+
 	static navigationOptions = ({navigation}) => ({
 		header: (
 			<ThemeProvider>
@@ -21,11 +28,22 @@ export default class AddProgramItemScreen extends React.Component {
 					onLeftElementPress={() => navigation.goBack()}
 					centerElement="Options"
 					rightElement="save"
-					onRightElementPress={() => null}
+					onRightElementPress={() => navigation.state.params.setData()}
 				/>
 			</ThemeProvider>
 		),
 	});
+
+	setData() {
+		this.props.navigation.state.params.setDataOptions(
+			this.props.navigation.state.params.itemIndex,
+			{
+				repetitions: this.state.repetitions,
+				sets: this.state.sets,
+			},
+		);
+		this.props.navigation.goBack();
+	}
 
 	onChangeSetInput(text) {
 		const newText = this.onChangeInput(text);
@@ -66,17 +84,28 @@ export default class AddProgramItemScreen extends React.Component {
 							<Body>
 								<Text> Sets: </Text>
 								<TextInput
+									underlineColorAndroid="transparent"
 									style={Styles.textInput}
 									keyboardType="numeric"
 									value={this.state.sets}
 									maxLength={3}
 									onChangeText={text => this.onChangeSetInput(text)}
+									borderRadius={5}
 								/>
 							</Body>
 						</CardItem>
 						<CardItem>
 							<Body>
 								<Text> Repetitions: </Text>
+								<TextInput
+									underlineColorAndroid="transparent"
+									style={Styles.textInput}
+									keyboardType="numeric"
+									value={this.state.repetitions}
+									maxLength={3}
+									onChangeText={text => this.onChangeRepetitionsInput(text)}
+									borderRadius={5}
+								/>
 							</Body>
 						</CardItem>
 					</Card>
