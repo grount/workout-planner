@@ -11,7 +11,7 @@ export const uiTheme = {
 			elevation: 0,
 		}	
 	}
-}
+};
 
 export const styles = {
 	container: {
@@ -27,6 +27,12 @@ export const styles = {
 		width: '95%',
 		height: 35,
 		borderColor: '#00CCA0'
+	},
+	itemBody: {
+		flexDirection: 'row',
+	},
+	itemOptions: {
+		color: '#C3C3C3',
 	},
 	label: {
 		color: '#067EAD',
@@ -48,5 +54,5 @@ export const styles = {
 	button: {
 		height: 20
 	}
-}
+};
 
