@@ -23,6 +23,7 @@ import MainStyles from '../style/MainStyles.js';
 export default class AddProgramScreen extends React.Component {
 	constructor(props) {
 		super(props);
+		this.setDataOptions = this.setDataOptions.bind(this);
 		this.state = {
 			search: '',
 			programName: '',
@@ -77,10 +78,29 @@ export default class AddProgramScreen extends React.Component {
 		});
 	}
 
+	isCheckedItemsHaveOptions() {
+		const data = this.state.data;
+		let isValid = true;
+		data.forEach(item => {
+			if (item.checked && !item.options) {
+				Alert.alert(
+					'Warning',
+					'Please add options to all checked items',
+					[{text: 'OK'}],
+					{cancelable: false},
+				);
+				isValid = false;
+			}
+		});
+		return isValid;
+	}
+
 	onToolbarRightElementPress = () => {
 		if (this.state.programName !== '') {
-			this.props.navigation.dispatch(actions.setProgramExists(true));
-			this.props.navigation.goBack(null);
+			if (this.isCheckedItemsHaveOptions()) {
+				this.props.navigation.goBack(null);
+				this.props.navigation.dispatch(actions.setProgramExists(true));
+			}
 		} else {
 			this.setState({showDialog: true});
 		}
@@ -142,6 +162,17 @@ export default class AddProgramScreen extends React.Component {
 		);
 	}
 
+	renderOptions(item) {
+		if (item.options) {
+			return (
+				<Text>
+					<Text style={styles.itemOptions}>{item.options.sets}x</Text>
+					<Text style={styles.itemOptions}>{item.options.repetitions}</Text>
+				</Text>
+			);
+		}
+	}
+
 	render() {
 		let filteredData = this.state.data.filter(data => {
 			return data.key.indexOf(this.state.search) !== -1;
@@ -177,8 +208,9 @@ export default class AddProgramScreen extends React.Component {
 										containerStyle={styles.checkBox}
 										onPress={() => this.onCheckBoxChange(index)}
 									/>
-									<Body>
+									<Body style={styles.itemBody}>
 										<Text>{item.key}</Text>
+										{this.renderOptions(item)}
 									</Body>
 									<Right>
 										{item.checked ? (
@@ -191,7 +223,8 @@ export default class AddProgramScreen extends React.Component {
 														'AddProgramItemScreen',
 														{
 															text: item.key,
-															setDataOptions: () => this.setDataOptions,
+															setDataOptions: this.setDataOptions,
+															itemIndex: index,
 														},
 													)
 												}>
