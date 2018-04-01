@@ -95,9 +95,27 @@ export default class AddProgramScreen extends React.Component {
 		return isValid;
 	}
 
+	isAtLeastOneCheckedItem() {
+		const data = this.state.data;
+		let isValid = false;
+		data.forEach(item => {
+			if (item.checked && item.options) isValid = true;
+		});
+
+		if (!isValid)
+			Alert.alert(
+				'Warning',
+				'Workout program must contain at least one exercise',
+				[{text: 'OK'}],
+				{cancelable: false},
+			);
+
+		return isValid;
+	}
+
 	onToolbarRightElementPress = () => {
 		if (this.state.programName !== '') {
-			if (this.isCheckedItemsHaveOptions()) {
+			if (this.isCheckedItemsHaveOptions() && this.isAtLeastOneCheckedItem()) {
 				this.props.navigation.goBack(null);
 				this.props.navigation.dispatch(actions.setProgramExists(true));
 			}
