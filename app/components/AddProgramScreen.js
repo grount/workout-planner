@@ -121,6 +121,7 @@ export default class AddProgramScreen extends React.Component {
 			if (this.isCheckedItemsHaveOptions() && this.isAtLeastOneCheckedItem()) {
 				this.addProgramItems(); // Consider redesign
 				this.props.navigation.dispatch(actions.setProgramExists(true));
+				this.props.navigation.dispatch(actions.addProgram(this.state.program));
 				this.props.navigation.goBack(null);
 			}
 		} else {
