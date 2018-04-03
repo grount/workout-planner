@@ -26,7 +26,10 @@ export default class AddProgramScreen extends React.Component {
 		this.setDataOptions = this.setDataOptions.bind(this);
 		this.state = {
 			search: '',
-			programName: '',
+			program: {
+				name: '',
+				workout: [],
+			},
 			showDialog: false,
 			data: [
 				{key: 'Bench Press', header: true, checked: true},
@@ -114,15 +117,28 @@ export default class AddProgramScreen extends React.Component {
 	}
 
 	onToolbarRightElementPress = () => {
-		if (this.state.programName !== '') {
+		if (this.state.program.name !== '') {
 			if (this.isCheckedItemsHaveOptions() && this.isAtLeastOneCheckedItem()) {
-				this.props.navigation.goBack(null);
+				this.addProgramItems(); // Consider redesign
 				this.props.navigation.dispatch(actions.setProgramExists(true));
+				this.props.navigation.goBack(null);
 			}
 		} else {
 			this.setState({showDialog: true});
 		}
 	};
+
+	addProgramItems() {
+		const data = this.state.data;
+		let program = this.state.program;
+
+		data.forEach(item => {
+			if (item.checked)
+				program.workout.push({key: item.key, options: item.options});
+		});
+
+		this.setState({program});
+	}
 
 	setDataOptions(index, data) {
 		const arr = [...this.state.data];
@@ -168,7 +184,12 @@ export default class AddProgramScreen extends React.Component {
 	};
 
 	onInputChangeText = text => {
-		this.setState({programName: text});
+		this.setState(prevState => ({
+			program: {
+				...prevState.program,
+				name: text,
+			},
+		}));
 	};
 
 	showDialogAlert() {
