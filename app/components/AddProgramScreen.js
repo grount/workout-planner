@@ -119,7 +119,7 @@ export default class AddProgramScreen extends React.Component {
 	onToolbarRightElementPress = () => {
 		if (this.state.program.name !== '') {
 			if (this.isCheckedItemsHaveOptions() && this.isAtLeastOneCheckedItem()) {
-				this.addProgramItems(); // Consider redesign
+				this.addProgramItems(); // TODO Consider redesign
 				this.props.navigation.dispatch(actions.setProgramExists(true));
 				this.props.navigation.dispatch(actions.addProgram(this.state.program));
 				this.props.navigation.goBack(null);
@@ -206,11 +206,60 @@ export default class AddProgramScreen extends React.Component {
 		if (item.options) {
 			return (
 				<Text>
-					<Text style={styles.itemOptions}>{item.options.sets}x</Text>
-					<Text style={styles.itemOptions}>{item.options.repetitions}</Text>
+					<Text note>{item.options.sets}x</Text>
+					<Text note>{item.options.repetitions}</Text>
 				</Text>
 			);
 		}
+	}
+
+	renderProgramNameHeader() {
+		return (
+			<Item inlineLabel rounded>
+				<Label style={styles.label}>Program Name:</Label>
+				<Input
+					style={MainStyles.greenColor}
+					onChangeText={text => this.onInputChangeText(text)}
+				/>
+				<Icon
+					active
+					name="arrow-down"
+					style={MainStyles.blueColor}
+					onPress={Keyboard.dismiss}
+				/>
+			</Item>
+		);
+	}
+
+	renderItemCheckBox(item, index) {
+		return (
+			<CheckBox
+				checked={item.checked}
+				checkedIcon="check"
+				checkedColor={MainStyles.blue}
+				uncheckedColor={MainStyles.green}
+				containerStyle={styles.checkBox}
+				onPress={() => this.onCheckBoxChange(index)}
+			/>
+		);
+	}
+
+	renderItemButton(item, index) {
+		return (
+			<Button
+				iconRight
+				transparent
+				style={styles.button}
+				onPress={() =>
+					this.props.navigation.navigate('AddProgramItemScreen', {
+						text: item.key,
+						setDataOptions: this.setDataOptions,
+						itemIndex: index,
+					})
+				}>
+				<Icon name="arrow-forward" style={styles.lightBlue} />
+			</Button>
+		);
 	}
 
 	render() {
@@ -220,57 +269,21 @@ export default class AddProgramScreen extends React.Component {
 		return (
 			<Container ref="containerRef" style={styles.container}>
 				{this.state.showDialog ? this.showDialogAlert() : null}
+				{this.renderProgramNameHeader()}
 				<Content>
-					<Item inlineLabel rounded>
-						<Label style={styles.label}>Program Name:</Label>
-						<Input
-							style={MainStyles.greenColor}
-							onChangeText={text => this.onInputChangeText(text)}
-						/>
-						<Icon
-							active
-							name="arrow-down"
-							style={MainStyles.blueColor}
-							onPress={Keyboard.dismiss}
-						/>
-					</Item>
 					<List
 						dataArray={filteredData}
 						renderRow={(item, sectionId, index) => (
 							<View>
 								{this.renderItemHeader(item.key, item.header)}
 								<ListItem>
-									<CheckBox
-										checked={item.checked}
-										checkedIcon="check"
-										checkedColor={MainStyles.blue}
-										uncheckedColor={MainStyles.green}
-										containerStyle={styles.checkBox}
-										onPress={() => this.onCheckBoxChange(index)}
-									/>
+									{this.renderItemCheckBox(item, index)}
 									<Body style={styles.itemBody}>
 										<Text>{item.key}</Text>
 										{this.renderOptions(item)}
 									</Body>
 									<Right>
-										{item.checked ? (
-											<Button
-												iconRight
-												transparent
-												style={styles.button}
-												onPress={() =>
-													this.props.navigation.navigate(
-														'AddProgramItemScreen',
-														{
-															text: item.key,
-															setDataOptions: this.setDataOptions,
-															itemIndex: index,
-														},
-													)
-												}>
-												<Icon name="arrow-forward" style={styles.lightBlue} />
-											</Button>
-										) : null}
+										{item.checked ? this.renderItemButton(item, index) : null}
 									</Right>
 								</ListItem>
 							</View>
