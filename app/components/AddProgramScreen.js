@@ -81,6 +81,19 @@ export default class AddProgramScreen extends React.Component {
 		});
 	}
 
+	onToolbarRightElementPress = () => {
+		if (this.state.program.name !== '') {
+			if (this.isCheckedItemsHaveOptions() && this.isAtLeastOneCheckedItem()) {
+				this.addProgramItems(); // TODO Consider redesign
+				this.props.navigation.dispatch(actions.setProgramExists(true));
+				this.props.navigation.dispatch(actions.addProgram(this.state.program));
+				this.props.navigation.goBack(null);
+			}
+		} else {
+			this.setState({showDialog: true});
+		}
+	};
+
 	isCheckedItemsHaveOptions() {
 		const data = this.state.data;
 		let isValid = true;
@@ -116,19 +129,6 @@ export default class AddProgramScreen extends React.Component {
 		return isValid;
 	}
 
-	onToolbarRightElementPress = () => {
-		if (this.state.program.name !== '') {
-			if (this.isCheckedItemsHaveOptions() && this.isAtLeastOneCheckedItem()) {
-				this.addProgramItems(); // TODO Consider redesign
-				this.props.navigation.dispatch(actions.setProgramExists(true));
-				this.props.navigation.dispatch(actions.addProgram(this.state.program));
-				this.props.navigation.goBack(null);
-			}
-		} else {
-			this.setState({showDialog: true});
-		}
-	};
-
 	addProgramItems() {
 		const data = this.state.data;
 		let program = this.state.program;
@@ -141,57 +141,22 @@ export default class AddProgramScreen extends React.Component {
 		this.setState({program});
 	}
 
-	setDataOptions(index, data) {
-		const arr = [...this.state.data];
-		const newItem = {
-			...arr[index],
-			options: data,
-		};
-
-		arr[index] = newItem;
-
-		this.setState({
-			data: arr,
-		});
-	}
-
-	renderItemHeader(text, isHeader) {
-		if (isHeader) {
-			return (
-				<ListItem itemDivider>
-					<Text>{text}</Text>
-				</ListItem>
-			);
-		}
-		return null;
-	}
-
-	onCheckBoxChange(index) {
-		const arr = [...this.state.data];
-		const newItem = {
-			...arr[index],
-			checked: !arr[index].checked,
-		};
-
-		arr[index] = newItem;
-
-		this.setState({
-			data: arr,
-		});
-	}
-
 	onToolbarChangeText = text => {
 		this.setState({search: text});
 	};
 
-	onInputChangeText = text => {
-		this.setState(prevState => ({
-			program: {
-				...prevState.program,
-				name: text,
-			},
-		}));
-	};
+	render() {
+		let filteredData = this.state.data.filter(data => {
+			return data.key.indexOf(this.state.search) !== -1;
+		});
+		return (
+			<Container ref="containerRef" style={styles.container}>
+				{this.state.showDialog ? this.showDialogAlert() : null}
+				{this.renderProgramNameHeader()}
+				<Content>{this.renderList(filteredData)}</Content>
+			</Container>
+		);
+	}
 
 	showDialogAlert() {
 		return Alert.alert(
@@ -200,17 +165,6 @@ export default class AddProgramScreen extends React.Component {
 			[{text: 'OK', onPress: () => this.setState({showDialog: false})}],
 			{cancelable: false},
 		);
-	}
-
-	renderOptions(item) {
-		if (item.options) {
-			return (
-				<Text>
-					<Text note>{item.options.sets}x</Text>
-					<Text note>{item.options.repetitions}</Text>
-				</Text>
-			);
-		}
 	}
 
 	renderProgramNameHeader() {
@@ -231,6 +185,49 @@ export default class AddProgramScreen extends React.Component {
 		);
 	}
 
+	onInputChangeText = text => {
+		this.setState(prevState => ({
+			program: {
+				...prevState.program,
+				name: text,
+			},
+		}));
+	};
+
+	renderList(filteredData) {
+		return (
+			<List
+				dataArray={filteredData}
+				renderRow={(item, sectionId, index) => (
+					<View>
+						{this.renderItemHeader(item.key, item.header)}
+						<ListItem>
+							{this.renderItemCheckBox(item, index)}
+							<Body style={styles.itemBody}>
+								<Text>{item.key}</Text>
+								{this.renderOptions(item)}
+							</Body>
+							<Right>
+								{item.checked ? this.renderItemButton(item, index) : null}
+							</Right>
+						</ListItem>
+					</View>
+				)}
+			/>
+		);
+	}
+
+	renderItemHeader(text, isHeader) {
+		if (isHeader) {
+			return (
+				<ListItem itemDivider>
+					<Text>{text}</Text>
+				</ListItem>
+			);
+		}
+		return null;
+	}
+
 	renderItemCheckBox(item, index) {
 		return (
 			<CheckBox
@@ -242,6 +239,31 @@ export default class AddProgramScreen extends React.Component {
 				onPress={() => this.onCheckBoxChange(index)}
 			/>
 		);
+	}
+
+	onCheckBoxChange(index) {
+		const arr = [...this.state.data];
+		const newItem = {
+			...arr[index],
+			checked: !arr[index].checked,
+		};
+
+		arr[index] = newItem;
+
+		this.setState({
+			data: arr,
+		});
+	}
+
+	renderOptions(item) {
+		if (item.options) {
+			return (
+				<Text>
+					<Text note>{item.options.sets}x</Text>
+					<Text note>{item.options.repetitions}</Text>
+				</Text>
+			);
+		}
 	}
 
 	renderItemButton(item, index) {
@@ -262,35 +284,18 @@ export default class AddProgramScreen extends React.Component {
 		);
 	}
 
-	render() {
-		let filteredData = this.state.data.filter(data => {
-			return data.key.indexOf(this.state.search) !== -1;
+
+	setDataOptions(index, data) {
+		const arr = [...this.state.data];
+		const newItem = {
+			...arr[index],
+			options: data,
+		};
+
+		arr[index] = newItem;
+
+		this.setState({
+			data: arr,
 		});
-		return (
-			<Container ref="containerRef" style={styles.container}>
-				{this.state.showDialog ? this.showDialogAlert() : null}
-				{this.renderProgramNameHeader()}
-				<Content>
-					<List
-						dataArray={filteredData}
-						renderRow={(item, sectionId, index) => (
-							<View>
-								{this.renderItemHeader(item.key, item.header)}
-								<ListItem>
-									{this.renderItemCheckBox(item, index)}
-									<Body style={styles.itemBody}>
-										<Text>{item.key}</Text>
-										{this.renderOptions(item)}
-									</Body>
-									<Right>
-										{item.checked ? this.renderItemButton(item, index) : null}
-									</Right>
-								</ListItem>
-							</View>
-						)}
-					/>
-				</Content>
-			</Container>
-		);
 	}
 }
