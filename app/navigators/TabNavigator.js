@@ -29,6 +29,7 @@ export const TabNav = TabNavigator(
 	{
 		tabBarPosition: 'bottom',
 		lazy: true,
+		swipeEnabled: false,
 		tabBarOptions: {
 			activeTintColor: '#FFF',
 			inactiveTintColor: 'rgba(255,255,255,0.25)',
