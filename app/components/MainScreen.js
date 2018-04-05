@@ -1,6 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Container, Content, List, ListItem, Text, Body} from 'native-base';
+import {
+	Container,
+	Content,
+	List,
+	ListItem,
+	Icon,
+	Text,
+	Body,
+	Right,
+} from 'native-base';
 import NoProgramScreen from './NoProgramScreen.js';
 import style from '../style/MainScreen.js';
 
@@ -17,33 +26,6 @@ class MainScreen extends React.Component {
 		headerTintColor: '#fff',
 	};
 
-	renderWorkoutList() {
-		const program = this.props.mainScreen.get('workout');
-
-		return (
-			<Content>
-				<List
-					dataArray={program.workout}
-					renderRow={item => (
-						<ListItem style={{backgroundColor: 'white', marginLeft: 0, marginBottom: 5}}>
-							<Body
-								style={{
-									flex: 1,
-									justifyContent: 'center',
-									alignItems: 'center',
-								}}>
-								<Text>{item.key}</Text>
-								<Text note>
-									{item.options.sets}x{item.options.repetitions}
-								</Text>
-							</Body>
-						</ListItem>
-					)}
-				/>
-			</Content>
-		);
-	}
-
 	render() {
 		const isProgramExists = this.props.mainScreen.get('isProgramExists');
 		return (
@@ -56,6 +38,43 @@ class MainScreen extends React.Component {
 				{!isProgramExists ? null : this.renderWorkoutList()}
 			</Container>
 		);
+	}
+
+	renderWorkoutList() {
+		const program = this.props.mainScreen.get('program');
+		return (
+			<Content>
+				<List
+					dataArray={program.workout}
+					renderRow={(item, sectionId, index) => (
+						<ListItem
+							style={{
+								backgroundColor: 'white',
+								marginLeft: 0,
+								marginBottom: 5,
+							}}>
+							<Body
+								style={{
+									marginLeft: 10,
+								}}>
+								<Text>{item.key}</Text>
+								<Text note>
+									{item.options.sets}x{item.options.repetitions}
+								</Text>
+								{item.visible ? <Text> TEST </Text> : null}
+							</Body>
+							<Right style={{marginRight: 10}}>
+								<Icon name="play" onPress={this.onWorkoutItemPress} />
+							</Right>
+						</ListItem>
+					)}
+				/>
+			</Content>
+		);
+	}
+
+	onWorkoutItemPress() {
+		// TODO dispatch
 	}
 }
 

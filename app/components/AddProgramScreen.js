@@ -135,7 +135,11 @@ export default class AddProgramScreen extends React.Component {
 
 		data.forEach(item => {
 			if (item.checked)
-				program.workout.push({key: item.key, options: item.options});
+				program.workout.push({
+					key: item.key,
+					options: item.options,
+					visible: false,
+				});
 		});
 
 		this.setState({program});
@@ -283,7 +287,6 @@ export default class AddProgramScreen extends React.Component {
 			</Button>
 		);
 	}
-
 
 	setDataOptions(index, data) {
 		const arr = [...this.state.data];
