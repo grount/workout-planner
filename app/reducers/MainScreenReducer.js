@@ -10,7 +10,7 @@ export default function MainScreenReducer(state = initialState, action) {
 		case types.SET_PROGRAM_EXISTS_CONST:
 			return state.set('isProgramExists', action.isProgramExists);
 		case types.ADD_PROGRAM_CONST:
-			return state.set('workout', action.workout);
+			return state.set('program', action.program);
 		default:
 			return state;
 	}
