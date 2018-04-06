@@ -41,7 +41,7 @@ class MainScreen extends React.Component {
 	}
 
 	renderWorkoutList() {
-		const program = this.props.mainScreen.get('program');
+		const program = this.props.mainScreen.get('program').toJS();
 		return (
 			<Content>
 				<List
@@ -64,7 +64,7 @@ class MainScreen extends React.Component {
 								{item.visible ? <Text> TEST </Text> : null}
 							</Body>
 							<Right style={{marginRight: 10}}>
-								<Icon name="play" onPress={this.onWorkoutItemPress} />
+								<Icon name="play" onPress={ () => this.onWorkoutItemPress(index)} />
 							</Right>
 						</ListItem>
 					)}
@@ -73,8 +73,7 @@ class MainScreen extends React.Component {
 		);
 	}
 
-	onWorkoutItemPress() {
-		// TODO dispatch
+	onWorkoutItemPress(index) {
 	}
 }
 
