@@ -13,6 +13,12 @@ export default function MainScreenReducer(state = initialState, action) {
 			const programImmutable = Immutable.fromJS(action.program);
 			return state.set('program', programImmutable);
 		}
+		case types.TOGGLE_WORKOUT_ITEM_DISPLAY: {
+			return state.setIn(
+				['program', 'workout', action.index, 'visible'],
+				!state.getIn(['program', 'workout', action.index, 'visible']),
+			);
+		}
 		default:
 			return state;
 	}

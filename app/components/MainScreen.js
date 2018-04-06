@@ -12,6 +12,7 @@ import {
 } from 'native-base';
 import NoProgramScreen from './NoProgramScreen.js';
 import style from '../style/MainScreen.js';
+import * as actions from '../actions/MainPageActions';
 
 class MainScreen extends React.Component {
 	constructor(props) {
@@ -64,7 +65,7 @@ class MainScreen extends React.Component {
 								{item.visible ? <Text> TEST </Text> : null}
 							</Body>
 							<Right style={{marginRight: 10}}>
-								<Icon name="play" onPress={ () => this.onWorkoutItemPress(index)} />
+								<Icon name={item.visible ? 'pause': 'play'} onPress={ () => this.onWorkoutItemPress(index)} />
 							</Right>
 						</ListItem>
 					)}
@@ -74,6 +75,8 @@ class MainScreen extends React.Component {
 	}
 
 	onWorkoutItemPress(index) {
+		// TODO if you start a specific exercise and press play on other stop the first exercise aka "pause" icon.
+		this.props.navigation.dispatch(actions.toggleWorkoutItemDisplay(index));
 	}
 }
 
