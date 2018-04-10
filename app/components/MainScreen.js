@@ -15,7 +15,6 @@ import style from '../style/MainScreen.js';
 import * as actions from '../actions/MainPageActions';
 import ProgramAdditionalScreen from './ProgramAdditionalScreen.js';
 
-
 class MainScreen extends React.Component {
 	constructor(props) {
 		super(props);
@@ -50,24 +49,19 @@ class MainScreen extends React.Component {
 				<List
 					dataArray={program.workout}
 					renderRow={(item, sectionId, index) => (
-						<ListItem
-							style={{
-								backgroundColor: 'white',
-								marginLeft: 0,
-								marginBottom: 5,
-							}}>
-							<Body
-								style={{
-									marginLeft: 10,
-								}}>
+						<ListItem style={style.ListItem}>
+							<Body style={style.ListItemBody}>
 								<Text>{item.key}</Text>
 								<Text note>
 									{item.options.sets}x{item.options.repetitions}
 								</Text>
-								{item.visible ? <ProgramAdditionalScreen/> : null}
+								{item.visible ? <ProgramAdditionalScreen /> : null}
 							</Body>
-							<Right style={{marginRight: 10}}>
-								<Icon name={item.visible ? 'pause': 'play'} onPress={ () => this.onWorkoutItemPress(index)} />
+							<Right style={style.ListItemBody}>
+								<Icon
+									name={item.visible ? 'pause' : 'play'}
+									onPress={() => this.onWorkoutItemPress(index)}
+								/>
 							</Right>
 						</ListItem>
 					)}
