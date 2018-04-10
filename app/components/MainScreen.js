@@ -13,6 +13,8 @@ import {
 import NoProgramScreen from './NoProgramScreen.js';
 import style from '../style/MainScreen.js';
 import * as actions from '../actions/MainPageActions';
+import ProgramAdditionalScreen from './ProgramAdditionalScreen.js';
+
 
 class MainScreen extends React.Component {
 	constructor(props) {
@@ -62,7 +64,7 @@ class MainScreen extends React.Component {
 								<Text note>
 									{item.options.sets}x{item.options.repetitions}
 								</Text>
-								{item.visible ? <Text> TEST </Text> : null}
+								{item.visible ? <ProgramAdditionalScreen/> : null}
 							</Body>
 							<Right style={{marginRight: 10}}>
 								<Icon name={item.visible ? 'pause': 'play'} onPress={ () => this.onWorkoutItemPress(index)} />
