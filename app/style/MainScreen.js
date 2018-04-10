@@ -1,23 +1,27 @@
 import {StyleSheet} from 'react-native';
 
+const $green = '#F1F2E6';
+const $blue = '#05668D';
+const $white = 'white';
+
 const style = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#F1F2E6',
+		backgroundColor: $green,
 		flexDirection: 'column',
 	},
 	mainContent: {
 		flex: 1,
-		backgroundColor: '#F1F2E6',
+		backgroundColor: $green,
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
 	navBar: {
 		flex: 0.06,
-		backgroundColor: '#05668D',
+		backgroundColor: $blue,
 	},
 	ListItem: {
-		backgroundColor: 'white',
+		backgroundColor: $white,
 		marginLeft: 0,
 		marginBottom: 5,
 	},

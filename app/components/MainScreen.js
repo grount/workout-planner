@@ -55,7 +55,12 @@ class MainScreen extends React.Component {
 								<Text note>
 									{item.options.sets}x{item.options.repetitions}
 								</Text>
-								{item.visible ? <ProgramAdditionalScreen /> : null}
+								{item.visible ? (
+									<ProgramAdditionalScreen
+										sets={item.options.sets}
+										repetitions={item.options.repetitions}
+									/>
+								) : null}
 							</Body>
 							<Right style={style.ListItemBody}>
 								<Icon
