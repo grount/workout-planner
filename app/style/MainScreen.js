@@ -28,6 +28,14 @@ const style = StyleSheet.create({
 	ListItemBody: {
 		marginLeft: 10,
 	},
+	Icon : {
+		alignSelf: 'flex-end'
+	},
+	View: {
+		flex : 1,
+		flexDirection: 'row',
+		justifyContent: 'space-between'
+	}
 });
 
 export default style;

@@ -14,7 +14,7 @@ import NoProgramScreen from './NoProgramScreen.js';
 import style from '../style/MainScreen.js';
 import * as actions from '../actions/MainPageActions';
 import ProgramAdditionalScreen from './ProgramAdditionalScreen.js';
-
+import {View} from 'react-native';
 class MainScreen extends React.Component {
 	constructor(props) {
 		super(props);
@@ -51,10 +51,19 @@ class MainScreen extends React.Component {
 					renderRow={(item, sectionId, index) => (
 						<ListItem style={style.ListItem}>
 							<Body style={style.ListItemBody}>
-								<Text>{item.key}</Text>
-								<Text note>
-									{item.options.sets}x{item.options.repetitions}
-								</Text>
+								<View style={style.View}>
+									<View>
+										<Text>{item.key}</Text>
+										<Text note>
+											{item.options.sets}x{item.options.repetitions}
+										</Text>
+									</View>
+									<Icon
+										style={style.Icon}
+										name={item.visible ? 'pause' : 'play'}
+										onPress={() => this.onWorkoutItemPress(index)}
+									/>
+								</View>
 								{item.visible ? (
 									<ProgramAdditionalScreen
 										sets={item.options.sets}
@@ -62,12 +71,6 @@ class MainScreen extends React.Component {
 									/>
 								) : null}
 							</Body>
-							<Right style={style.ListItemBody}>
-								<Icon
-									name={item.visible ? 'pause' : 'play'}
-									onPress={() => this.onWorkoutItemPress(index)}
-								/>
-							</Right>
 						</ListItem>
 					)}
 				/>
