@@ -10,14 +10,13 @@ export default class ProgramAdditionalScreen extends React.Component {
 	renderComponent() {
 		let items = [];
 
-		for (let i = 0; i < this.props.sets; i++) {
+		for (let i = 1; i <= this.props.sets; i++) {
 			items.push(
 				<Text key={i} style={style.text}>
 					{i}
 				</Text>,
 			);
 		}
-
 		return items;
 	}
 }
